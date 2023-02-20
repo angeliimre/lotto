@@ -22,18 +22,8 @@ Route::get('/add', function () {
 Route::post("/add",[LottoController::class,"add"]);
 
 Route::get('/', function () {
-    $result=[];
-    for($i=1;$i<6;$i++){
-        $field=Lotto::select("nr$i")->get()->pluck("nr$i")->toarray();
-        $result=array_merge($result,$field);
-    }
-
-    $result=array_count_values($result);
-
-    arsort($result);
-
-    //dd($result);
-    //set_time_limit(0);
+    
+    //you need to recomment this section for the first time running
 
     /*
     $data=file_get_contents(storage_path("/data.txt"));
@@ -51,5 +41,16 @@ Route::get('/', function () {
         }
         $lotto->save();
     }*/
+
+    $result=[];
+    for($i=1;$i<6;$i++){
+        $field=Lotto::select("nr$i")->get()->pluck("nr$i")->toarray();
+        $result=array_merge($result,$field);
+    }
+
+    $result=array_count_values($result);
+
+    arsort($result);
+
     return view("/welcome")->with("result",$result);
 });
